@@ -1,19 +1,19 @@
 # GestionFormation
 
-# package : com.intiFormation.<couche> (ex : com.intiFormation.service)
+# package : com.intiFormation.couche (ex : com.intiFormation.service)
 
 ##### Couche Dao ###################
-I<Class>Dao -> <Class>Dao
-  - new <class>Dao;
+IClassDao -> ClassDao
+  - new classDao;
   
 ##### Couche Service ###################
-I<Class>Service -> <Class>Service
-  - new <class>Service;
+IClassService -> ClassService
+  - new classService;
 
 ##### Couche Config ###################
 Security 
-I<Class>Config -> <Class>Config
-  - new <class>Config;
+IClassConfig -> ClassConfig
+  - new classConfig;
 
  BCryptPasswordEncoder passEncode;
  UserDetailsService customUserService;
@@ -21,5 +21,5 @@ I<Class>Config -> <Class>Config
  jwtUtil jwtokenUtil;
   
 ##### Couche Controller ###################
-I<Class>Controller -> <Class>Controller
-  - new <class>Controller;
+IClassController -> ClassController
+  - new classController;
