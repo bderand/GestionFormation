@@ -9,6 +9,7 @@ IClassDao -> ClassDao
 ##### Couche Service ###################
 IClassService -> ClassService
   - new classService;
+MailService
 
 ##### Couche Config ###################
 Security 
