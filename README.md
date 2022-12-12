@@ -1,5 +1,5 @@
 # GestionFormation
-
+Base de donnée : Formation
 # package : com.intiFormation.couche (ex : com.intiFormation.service)
 
 ##### Couche Dao ###################
