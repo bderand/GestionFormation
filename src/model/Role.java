@@ -15,7 +15,7 @@ public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String role;
+	private String nom;
 	
 	@OneToMany(mappedBy = "role")
 	private List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -23,15 +23,15 @@ public class Role {
 	
 	public Role() {}
 	
-	public Role(int id, String role, List<Utilisateur> utilisateurs) {
+	public Role(int id, String nom, List<Utilisateur> utilisateurs) {
 		this.id = id;
-		this.role = role;
+		this.nom = nom;
 		this.utilisateurs = utilisateurs;
 	}
 	
 	public Role(int id, String role) {
 		this.id = id;
-		this.role = role;
+		this.nom = role;
 	}
 	
 	public int getId() {
@@ -42,12 +42,12 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getRole() {
-		return role;
+	public String getNom() {
+		return nom;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 
 	public List<Utilisateur> getUtilisateurs() {
