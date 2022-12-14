@@ -11,4 +11,5 @@ public interface IHistoriqueService {
 	public void supprimer(int id);
 	public Historique afficherparId(int id);
 	public List<Historique> affichertous();
+	public List<Historique> affichertousparIdcommercial(int id);
 }
