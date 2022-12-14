@@ -21,6 +21,7 @@ import com.intiFormation.model.Formation;
 import com.intiFormation.model.Paiement;
 import com.intiFormation.model.Participant;
 import com.intiFormation.service.IPaiementService;
+import com.intiFormation.service.IParticipantService;
 import com.intiFormation.service.IPersonneService;
 
 @RestController
