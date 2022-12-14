@@ -1,8 +1,11 @@
 package com.intiFormation.service;
 
+<<<<<<< Updated upstream
 
 import java.util.ArrayList;
 
+=======
+>>>>>>> Stashed changes
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IPersonneDao;
 import com.intiFormation.dao.IUtilisateurDao;
+import com.intiFormation.model.Participant;
 import com.intiFormation.model.Personne;
 import com.intiFormation.model.Utilisateur;
 
@@ -86,6 +90,20 @@ public class PersonneService implements IPersonneService{
 	     message.setSubject(titre); 
 	     message.setText(sujet);
 	     emailSender.send(message);
+	}
+	
+	@Override
+	public void contact_participant(Participant participant) {
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("javajeeappli@gmail.com");
+		message.setTo(participant.getEmail());
+		message.setSubject("Identifiants de connection : Formation");
+		String txt = "Bonjour " + participant.getNom() + " " + participant.getPrenom()
+					+ "\nVos identifiants pour accéder à  votre compte sont: \n " + "Nom d'utilisateur: " + participant.getUsername() + "\n Mot de passe: " + participant.getPassword()
+						+ "\n";
+		message.setText(txt);
+		emailSender.send(message);
 	}
 
 }

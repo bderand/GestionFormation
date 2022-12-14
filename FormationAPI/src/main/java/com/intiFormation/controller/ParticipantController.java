@@ -94,10 +94,11 @@ public class ParticipantController {
 				String username = generator.getUsername();
 				String password = generator.getPassword();
 				participant.setUsername(username);
+				participant.setPassword(password);
+				
+				personneService.contact_participant(participant);
+				
 				participant.setPassword(encode.encode(password));
-				
-				//Implémenter envoi de mail à la personne avec son username et mot de passe
-				
 				participantService.addParticipant(participant);
 				
 			}
