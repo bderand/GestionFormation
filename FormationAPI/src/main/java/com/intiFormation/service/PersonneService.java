@@ -1,6 +1,9 @@
 package com.intiFormation.service;
 
+<<<<<<< HEAD
+=======
 import java.util.ArrayList;
+>>>>>>> master
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

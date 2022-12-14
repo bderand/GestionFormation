@@ -16,9 +16,9 @@ public class PaiementService implements IPaiementService {
 
 	@Autowired
 	IPaiementDao paiementDao;
-	
-	//@Autowired
-	//IFormationDao formationDao;
+
+	@Autowired
+	IFormationDao formationDao;
 	
 	@Override
 	public List<Paiement> getPaiements_all() {
@@ -66,7 +66,7 @@ public class PaiementService implements IPaiementService {
 
 	@Override
 	public float RestantPaiement(int id_participant, int id_formation) {
-		/*
+		
 		float somme_restant = 0.f;
 		List<Paiement> paiements = this.getPaiements_idParticipantsFormation(id_participant, id_formation);
 		Formation formation = formationService.getFormation_id(id_formation);
@@ -83,10 +83,9 @@ public class PaiementService implements IPaiementService {
 			somme_restant = somme_total - somme_paye;	
 	
 		}
-		*/
+		
 		return 0.f;
 	}
 	
-	
-
 }
+

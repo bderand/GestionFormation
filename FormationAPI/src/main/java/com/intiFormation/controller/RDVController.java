@@ -1,5 +1,8 @@
 package com.intiFormation.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,21 +24,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.intiFormation.model.Personne;
 import com.intiFormation.model.RDV;
+
+
 import com.intiFormation.service.IPersonneService;
+
 import com.intiFormation.service.IRDVService;
 
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:4200")
+
+
 @EnableScheduling
+
 public class RDVController {
 	
 	@Autowired
 	private IRDVService rservice;
 	
+
+
 	@Autowired
 	private IPersonneService pservice;
 	
+
 	@GetMapping("/rdvs")
 	public List<RDV> getall(){
 		List<RDV> rdvs = rservice.affichertous();
@@ -63,6 +75,9 @@ public class RDVController {
 		rservice.modifier(r);
 	}
 	
+
+	
+
 	@Scheduled(fixedRate = 1000)
 	public void cronJobSch() {
 		List<RDV> rdvs = rservice.affichertous();
@@ -83,5 +98,6 @@ public class RDVController {
 		}
 		
 		}
+
 
 }
