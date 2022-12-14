@@ -12,8 +12,8 @@ import com.intiFormation.model.Paiement;
 import com.intiFormation.model.Participant;
 
 @Service
-public class PaiementService /*implements IPaiementService*/ {
-/*
+public class PaiementService implements IPaiementService {
+
 	@Autowired
 	IPaiementDao paiementDao;
 
@@ -86,6 +86,6 @@ public class PaiementService /*implements IPaiementService*/ {
 		
 		return 0.f;
 	}
-*/	
+	
 }
 
