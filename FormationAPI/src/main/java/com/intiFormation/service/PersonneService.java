@@ -1,11 +1,8 @@
 package com.intiFormation.service;
 
-<<<<<<< Updated upstream
 
 import java.util.ArrayList;
 
-=======
->>>>>>> Stashed changes
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
