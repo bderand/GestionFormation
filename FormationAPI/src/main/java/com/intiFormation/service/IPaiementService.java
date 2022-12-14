@@ -3,7 +3,6 @@ package com.intiFormation.service;
 import java.util.List;
 
 import com.intiFormation.model.Paiement;
-import com.intiFormation.model.Participant;
 
 public interface IPaiementService {
 

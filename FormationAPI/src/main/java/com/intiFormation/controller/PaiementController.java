@@ -24,12 +24,12 @@ public class PaiementController {
 
 	@Autowired
 	IPaiementService paiementService;
-	/*
+
 	@Autowired
 	IFormationService formationService;
 	@Autowired
 	IParticipantService participantService;
-	*/
+	
 	@GetMapping("/paiements")
 	public List<Paiement> getPaiements_all() {
 		return paiementService.getPaiements_all();
@@ -45,7 +45,7 @@ public class PaiementController {
 		
 		return paiementService.getPaiement_id(id_paiement);
 	}
-	/*
+
 	@GetMapping("/paiements/formation")
 	public float getPaiementReste(@RequestParam("id_participant") int id_participant, @RequestParam("id_formation") int id_formation) {
 		float reste = paiementService.RestantPaiement(id_participant, id_formation);
@@ -58,7 +58,7 @@ public class PaiementController {
 		
 		return reste;
 	}
-	*/
+
 	@PostMapping("/paiements")
 	public Paiement addPaiement(@RequestBody Paiement paiement) {
 		
@@ -76,4 +76,5 @@ public class PaiementController {
 		
 		paiementService.suppPaiement(id_paiement);
 	}
+
 }

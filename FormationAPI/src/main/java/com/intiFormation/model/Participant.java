@@ -36,6 +36,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		super(id, prenom, nom, age, email, tel, role);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Participant(Personne p, Role role, List<Formation> formations) {
+		
+		super(p.getId(), p.getPrenom(), p.getNom(), p.getAge(), p.getEmail(), p.getTel(), role);
+		this.formations = formations;
+	}
 
 	public Participant(String prenom, String nom, int age, String email, String tel, Role role, List<Formation> formations) {
 		super(prenom, nom, age, email, tel, role);

@@ -29,6 +29,7 @@ public class UtilisateurController {
 		
 		return utilisateurService.getUtilisateurs_all();
 		
+		
 	}
 	
 	@GetMapping("/utilisateurs/{id}")
