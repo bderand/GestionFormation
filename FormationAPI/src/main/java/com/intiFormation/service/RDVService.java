@@ -8,6 +8,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IRDVDao;
+
+import com.intiFormation.model.Personne;
+
 import com.intiFormation.model.RDV;
 
 

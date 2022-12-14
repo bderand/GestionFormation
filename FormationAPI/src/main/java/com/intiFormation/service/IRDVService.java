@@ -2,6 +2,10 @@ package com.intiFormation.service;
 
 import java.util.List;
 
+
+
+import com.intiFormation.model.Personne;
+
 import com.intiFormation.model.RDV;
 
 public interface IRDVService {
