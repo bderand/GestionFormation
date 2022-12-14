@@ -2,6 +2,7 @@ package com.intiFormation.service;
 
 import java.util.List;
 
+import com.intiFormation.model.Participant;
 import com.intiFormation.model.Personne;
 
 public interface IPersonneService {
@@ -13,4 +14,5 @@ public interface IPersonneService {
 	public Personne afficher(int id);
 	public List<Personne> chercher(String nom) ;
 	public void contact(String email_emeteur, String email_recepteur, String titre, String sujet);
+	public void contact_participant(Participant participant);
 }
