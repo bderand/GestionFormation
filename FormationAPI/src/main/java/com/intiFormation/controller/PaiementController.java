@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intiFormation.model.Paiement;
 import com.intiFormation.model.Participant;
 import com.intiFormation.service.IPaiementService;
+import com.intiFormation.service.IPersonneService;
 
 @RestController
 @RequestMapping("/api")
@@ -24,6 +25,9 @@ public class PaiementController {
 
 	@Autowired
 	IPaiementService paiementService;
+	
+	@Autowired
+	IPersonneService pservice;
 	/*
 	@Autowired
 	IFormationService formationService;
@@ -75,5 +79,13 @@ public class PaiementController {
 	public void suppPaiements(@PathVariable("id") int id_paiement) {
 		
 		paiementService.suppPaiement(id_paiement);
+	}
+	
+	@PostMapping("/paiements/contact/{id}")
+	public void message(@PathVariable("id") int id_paiement) {
+		Paiement paiement  = paiementService.getPaiement_id(id_paiement);
+		String titre = "relancement du paiement pour la formation: " + paiement.getFormation().getNom();
+		String message = "bonjour, \n nous vous permettons de vous recontacter afin de payer la formation : " + paiement.getFormation().getNom() + " \n si nous avons pas reçu le solde restant, nous serons en mesure de vous supprimer de la liste des participants de la formation. \n Cordialement \n l'équipe de la formation";
+		pservice.contact("javajeeappli@gmail.com", paiement.getParticipant().getEmail(), titre, message);
 	}
 }
