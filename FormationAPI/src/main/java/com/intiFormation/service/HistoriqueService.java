@@ -41,5 +41,12 @@ public class HistoriqueService implements IHistoriqueService{
 		List<Historique> liste = hdao.findAll();
 		return liste;
 	}
+	
+	@Override
+	public List<Historique> affichertousparIdcommercial(int id){
+		List<Historique> liste = hdao.findByCommercial_id(id);
+		return liste;
+	}
+	
 
 }

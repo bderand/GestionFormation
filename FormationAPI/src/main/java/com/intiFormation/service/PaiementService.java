@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IPaiementDao;
+import com.intiFormation.model.Formation;
 import com.intiFormation.model.Paiement;
 import com.intiFormation.model.Participant;
 

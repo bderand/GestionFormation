@@ -36,6 +36,12 @@ public class HistoriqueController {
 		return historique;
 	}
 	
+	@GetMapping("/historiques/commercial/{id}")
+	public List<Historique> getbyIdcommercial(@PathVariable("id") int id) {
+		List<Historique> historiques = hservice.affichertousparIdcommercial(id);
+		return historiques;
+	}
+	
 	@PostMapping("/historiques")
 	public void post(@RequestBody Historique h) {
 		hservice.ajouter(h);
