@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intiFormation.model.Formation;
 import com.intiFormation.model.Paiement;
 import com.intiFormation.model.Participant;
+import com.intiFormation.service.IFormationService;
 import com.intiFormation.service.IPaiementService;
 import com.intiFormation.service.IParticipantService;
 import com.intiFormation.service.IPersonneService;
@@ -37,6 +36,7 @@ public class PaiementController {
 
 	@Autowired
 	IFormationService formationService;
+	
 	@Autowired
 	IParticipantService participantService;
 	
@@ -62,7 +62,7 @@ public class PaiementController {
 		if(reste > 0)
 		{
 			Participant participant = participantService.getParticipant_id(id_participant);
-			Formation formation = formationService.getFormation_id(id_formation);
+			Formation formation = formationService.afficherparId(id_formation);
 			paiementService.addPaiement(new Paiement(reste, participant, formation));
 		}
 		
