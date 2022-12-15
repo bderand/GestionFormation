@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.intiFormation.model.Formateur;
+import com.intiFormation.model.Formation;
 import com.intiFormation.service.IFormateurService;
 
 @RestController
@@ -36,7 +37,18 @@ public class FormateurController {
 	
 	@PutMapping("/Formateurs")
 	public void put(@RequestBody Formateur f) {
-		fservice.modifier(f);
+		
+		Formateur formateur = fservice.afficherparId(f.getId());
+		
+		formateur.setNom(f.getNom());
+		formateur.setPrenom(f.getPrenom());
+		formateur.setAge(f.getAge());
+		formateur.setTel(f.getTel());
+		formateur.setEmail(f.getEmail());
+		formateur.setUsername(f.getUsername());
+		
+		fservice.ajouter(formateur);
+		
 	}
 	
 	@GetMapping("/Formateurs")
@@ -49,5 +61,11 @@ public class FormateurController {
 	public Formateur get(@PathVariable("id") int id) {
 		Formateur Formateur = fservice.afficherparId(id);
 		return Formateur;
+	}
+	
+	@GetMapping("/Formateurs/{id}/formations")
+	public List<Formation> getFormateurs_formations(@PathVariable("id") int id_formation){
+		
+		return fservice.afficherparId(id_formation).getFormations();
 	}
 }
