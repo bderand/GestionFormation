@@ -94,7 +94,7 @@ public class FormationController {
 		return Formations;
 	}
 	
-	@GetMapping("/Formations/${id}/participants")
+	@GetMapping("/Formations/{id}/participants")
 	public List<Participant> getFormation_participant(@PathVariable("id") int id){
 	
 		return fservice.afficherparId(id).getParticipants();
