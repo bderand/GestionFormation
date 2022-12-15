@@ -87,7 +87,7 @@ public class RDVController {
 		Calendar cal = Calendar.getInstance();
 		for(int i=0;i<rdvs.size();i++) {
 		    cal.setTime(rdvs.get(i).getRdv()); // sets calendar time/date
-		    cal.add(Calendar.MINUTE, -30); // adds one hour
+		    cal.add(Calendar.MINUTE, -30); // substract 30 min
 		    cal.getTime();
 			String str = sdf.format(cal.getTime());
 			if(str.equals(strDate)) {

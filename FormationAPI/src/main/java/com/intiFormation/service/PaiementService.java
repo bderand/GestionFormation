@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.intiFormation.dao.IFormationDao;
 import com.intiFormation.dao.IPaiementDao;
 import com.intiFormation.model.Formation;
 import com.intiFormation.model.Paiement;
@@ -70,7 +71,7 @@ public class PaiementService implements IPaiementService {
 		
 		float somme_restant = 0.f;
 		List<Paiement> paiements = this.getPaiements_idParticipantsFormation(id_participant, id_formation);
-		Formation formation = formationService.getFormation_id(id_formation);
+		Formation formation = formationDao.findById(id_formation).get();
 		if(paiements != null && formation != null)
 		{
 			float somme_paye = 0.f;
