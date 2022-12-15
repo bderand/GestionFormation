@@ -2,15 +2,15 @@ package com.intiFormation.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.intiFormation.dao.IFormationDao;
 import com.intiFormation.dao.IPaiementDao;
 import com.intiFormation.model.Formation;
 import com.intiFormation.model.Paiement;
-import com.intiFormation.model.Participant;
+
 
 @Service
 public class PaiementService implements IPaiementService {
@@ -70,11 +70,11 @@ public class PaiementService implements IPaiementService {
 		
 		float somme_restant = 0.f;
 		List<Paiement> paiements = this.getPaiements_idParticipantsFormation(id_participant, id_formation);
-		Formation formation = formationService.getFormation_id(id_formation);
-		if(paiements != null && formation != null)
+		Optional<Formation> op = formationDao.findById(id_formation);
+		if(paiements != null && op.isPresent())
 		{
 			float somme_paye = 0.f;
-			float somme_total = formation.getPrix();
+			float somme_total = op.get().getPrix();
 			
 			for(Paiement p:paiements)
 			{
@@ -85,7 +85,7 @@ public class PaiementService implements IPaiementService {
 	
 		}
 		
-		return 0.f;
+		return somme_restant;
 	}
 	
 }
