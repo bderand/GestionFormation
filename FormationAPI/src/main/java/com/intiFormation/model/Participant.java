@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @DiscriminatorValue("idParticipant")
 	public class Participant extends Utilisateur {
