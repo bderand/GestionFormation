@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JacksonException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intiFormation.model.Formateur;
 import com.intiFormation.model.Formation;
 import com.intiFormation.model.Paiement;
@@ -46,15 +48,30 @@ public class FormationController {
 	}
 	
 	@PostMapping("/Formations/formateur")
-	public Formation setFormations_formateur(@RequestParam("id_formation") int id_formation, @RequestParam("id_formateur") int id_formateur) {
+	public Formation setFormations_formateur(@RequestParam("formation") String f, @RequestParam("id_formateur") int id_formateur) {
 		
-		Formation formation = fservice.afficherparId(id_formation);
+		ObjectMapper obj_mapper = new ObjectMapper();
+		Formation formation_new = new Formation();
+		try {
+		Formation formation = obj_mapper.readValue(f, Formation.class);
+		
+		if(formation.getId() != 0)formation_new = fservice.afficherparId(formation.getId());
+		
 		Formateur formateur = formateurService.afficherparId(id_formateur);
 		
-		formation.setFormateur(formateur);
-		fservice.ajouter(formation);
+		formation_new.setDebut(formation.getDebut());
+		formation_new.setFin(formation.getFin());
+		formation_new.setNom(formation.getNom());
+		formation_new.setPrix(formation.getPrix());
+		formation_new.setFormateur(formateur);
 		
-		return formation;
+		fservice.ajouter(formation_new);
+		}
+		catch (JacksonException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return formation_new;
 		
 	}
 	
