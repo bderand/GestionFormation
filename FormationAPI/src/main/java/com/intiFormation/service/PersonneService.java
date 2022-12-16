@@ -1,8 +1,6 @@
 package com.intiFormation.service;
 
 
-import java.util.ArrayList;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,17 +43,8 @@ public class PersonneService implements IPersonneService{
 	
 	@Override
 	public List<Personne> affichertous() {
-		List<Personne> personnes = pdao.findAll();
-		List<Utilisateur> utilisateurs = udao.findAll();
-		for (int i=0;i<personnes.size();i++) {
-			for (int j=0;j<utilisateurs.size();j++) {
-				if(personnes.get(i).getId() == utilisateurs.get(j).getId()) {
-					personnes.remove(i);
-				}
-			}
-			
-		}
-		return personnes;
+		
+		return pdao.findAll();
 	}
 	
 	@Override

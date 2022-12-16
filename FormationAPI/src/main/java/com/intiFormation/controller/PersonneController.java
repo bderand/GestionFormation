@@ -1,5 +1,6 @@
 package com.intiFormation.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,13 @@ public class PersonneController {
 	@GetMapping("/personnes")
 	public List<Personne> getAll(){
 		List<Personne> personnes = pservice.affichertous();
-		return personnes;
+		List<Personne> prospects = new ArrayList<>();
+		for(Personne p:personnes) {
+			if(!(p instanceof Utilisateur)) {
+				prospects.add(p);
+			}
+		}
+		return prospects;
 	}
 	
 	@GetMapping("/personnes/{id}")
@@ -61,7 +68,14 @@ public class PersonneController {
 	@GetMapping("/personnes/chercher/{nom}")
 	public List<Personne> getbynom(@PathVariable("nom") String nom){
 		List<Personne> personnes = pservice.chercher(nom);
-		return personnes;
+		List<Personne> prospects = new ArrayList<>();
+		for(Personne p:personnes) {
+			if(!(p instanceof Utilisateur)) {
+				prospects.add(p);
+			}
+		}
+
+		return prospects;
 	}
 	
 	@PostMapping("personnes/contact/{idp}")

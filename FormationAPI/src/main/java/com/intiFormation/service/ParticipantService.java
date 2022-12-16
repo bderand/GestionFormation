@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IParticipantDao;
 import com.intiFormation.model.Participant;
 
+@Service
 public class ParticipantService implements IParticipantService {
 
 	

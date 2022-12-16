@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,14 +66,17 @@ public class ParticipantController {
 	
 	@GetMapping("/participants/formation/{id_formation}")
 	public List<Participant> getParticipants_formation(@PathVariable("id_formation") int id_formation){
-		
-		return formationService.getParticipants_formationId(id_formation);
+		Formation formation = formationService.afficherparId(id_formation);
+		if(formation == null)return null;
+		else return formation.getParticipants();
 	}
 	
 	@PostMapping("/participants/nouveau")
 	public Participant toParticipant(@RequestParam("personne") String personne, @RequestParam(value = "id_formation", required = false) int[] id_formations) {
 		
 		ObjectMapper obj_mapper = new ObjectMapper();
+		Participant participant = null;
+		
 		try {
 			List<Formation> formations = new ArrayList<>();
 			Personne p = obj_mapper.readValue(personne, Personne.class);
@@ -82,7 +84,7 @@ public class ParticipantController {
 			if(id_formations != null)
 				for(int id_formation:id_formations)
 				{	
-					formations.add(formationService.getFormation_id(id_formation));
+					formations.add(formationService.afficherparId(id_formation));
 				}
 			
 			if(p != null && p.getId() != 0) {
@@ -90,7 +92,7 @@ public class ParticipantController {
 				PasswordUsernameGenerator generator = new PasswordUsernameGenerator(p.getNom(), p.getPrenom());
 				Role role = roleService.getRole_nom("participant");
 				
-				Participant participant = new Participant(p, role, formations);
+				participant = new Participant(p, role, formations);
 				
 				String username = generator.getUsername();
 				String password = generator.getPassword();
@@ -100,7 +102,9 @@ public class ParticipantController {
 				personneService.contact_participant(participant);
 				
 				participant.setPassword(encode.encode(password));
-				participantService.addParticipant(participant);
+				
+				participant = participantService.addParticipant(participant);
+				personneService.supprimer(p.getId());
 				
 			}
 			
@@ -109,6 +113,8 @@ public class ParticipantController {
 		catch(JacksonException e) {
 			e.printStackTrace();
 		}
+		
+		return participant;
 	}
 	
 	@PostMapping("/participants")
@@ -120,7 +126,7 @@ public class ParticipantController {
 		
 		for(int id_formation:id_formations) {
 			
-			formations_new.add(formationService.getFormation_id(id_formation));
+			formations_new.add(formationService.afficherparId(id_formation));
 		}
 		if(participant != null)
 		{
@@ -132,6 +138,8 @@ public class ParticipantController {
 			participantService.addParticipant(participant);
 			
 		}
+		
+		return participantService.addParticipant(participant);
 	}
 	
 	@DeleteMapping("/participants/{id}")

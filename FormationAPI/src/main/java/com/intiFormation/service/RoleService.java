@@ -1,10 +1,12 @@
 package com.intiFormation.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IRoleDao;
 import com.intiFormation.model.Role;
 
+@Service
 public class RoleService implements IRoleService {
 
 	@Autowired
