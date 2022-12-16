@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IPersonneDao;
 import com.intiFormation.dao.IUtilisateurDao;
-import com.intiFormation.model.Participant;
 import com.intiFormation.model.Personne;
 import com.intiFormation.model.Utilisateur;
 
@@ -79,14 +78,14 @@ public class PersonneService implements IPersonneService{
 	}
 	
 	@Override
-	public void contact_participant(Participant participant) {
+	public void contact_participant(Utilisateur user) {
 		
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("javajeeappli@gmail.com");
-		message.setTo(participant.getEmail());
+		message.setTo(user.getEmail());
 		message.setSubject("Identifiants de connection : Formation");
-		String txt = "Bonjour " + participant.getNom() + " " + participant.getPrenom()
-					+ "\nVos identifiants pour accéder à  votre compte sont: \n " + "Nom d'utilisateur: " + participant.getUsername() + "\n Mot de passe: " + participant.getPassword()
+		String txt = "Bonjour " + user.getNom() + " " + user.getPrenom()
+					+ "\nVos identifiants pour accéder à  votre compte sont: \n " + "Nom d'utilisateur: " + user.getUsername() + "\n Mot de passe: " + user.getPassword()
 						+ "\n";
 		message.setText(txt);
 		emailSender.send(message);
