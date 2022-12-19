@@ -3,6 +3,7 @@ package com.intiFormation.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.intiFormation.model.Utilisateur;
@@ -23,6 +25,9 @@ public class UtilisateurController {
 	
 	@Autowired
 	IUtilisateurService utilisateurService;
+	
+	@Autowired
+	BCryptPasswordEncoder encode;
 	
 	@GetMapping("/utilisateurs")
 	public List<Utilisateur> getUtilisateur_all() {
@@ -52,8 +57,32 @@ public class UtilisateurController {
 	
 	@PostMapping("/utilisateurs")
 	public Utilisateur ajoutUtilisateur(@RequestBody Utilisateur user) {
+		Utilisateur utilisateur = utilisateurService.getUtilisateur_id(user.getId());
+		if(utilisateur != null)
+		{
+			utilisateur.setAge(user.getAge());
+			utilisateur.setNom(user.getNom());
+			utilisateur.setPrenom(user.getPrenom());
+			utilisateur.setEmail(user.getEmail());
+			utilisateur.setTel(user.getTel());
+			utilisateur.setUsername(user.getUsername());
+		}
 		
-		return utilisateurService.addUtilisateur(user);
+		return utilisateurService.addUtilisateur(utilisateur);
+	}
+	
+	@PostMapping("/utilisateurs/matched")
+	public boolean changePassword(@RequestParam("id_user") int id_user, @RequestParam("mpts_new") String mpts_new, @RequestParam("mpts") String mpts) {
+		
+		Utilisateur user = utilisateurService.getUtilisateur_id(id_user);
+		
+		if(encode.matches(mpts, user.getPassword()))
+		{
+			user.setPassword(encode.encode(mpts_new));
+			utilisateurService.addUtilisateur(user);
+			return true;
+		}
+		else return false;
 	}
 	
 	@DeleteMapping("/utilisateurs/{id}")
