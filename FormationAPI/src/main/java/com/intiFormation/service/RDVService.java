@@ -49,6 +49,12 @@ public class RDVService implements IRDVService{
 		return liste;
 	}
 	
+	@Override
+	public List<RDV> afficherparcommercial(int id){
+		List<RDV> liste = rdao.findByCommercial_id(id);
+		return liste;
+	}
+	
 
 	public void contact(String email_emeteur, String email_recepteur, String titre, String sujet) {
 		 SimpleMailMessage message = new SimpleMailMessage(); 

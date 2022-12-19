@@ -29,7 +29,6 @@ public class PaiementService implements IPaiementService {
 
 	@Override
 	public List<Paiement> getPaiements_idParticipants(int id_participant) {
-		// TODO Auto-generated method stub
 		return paiementDao.findByParticipant_id(id_participant);
 	}
 
@@ -70,8 +69,11 @@ public class PaiementService implements IPaiementService {
 		
 		float somme_restant = 0.f;
 		List<Paiement> paiements = this.getPaiements_idParticipantsFormation(id_participant, id_formation);
+
+
 		Optional<Formation> op = formationDao.findById(id_formation);
 		if(paiements != null && op.isPresent())
+
 		{
 			float somme_paye = 0.f;
 			float somme_total = op.get().getPrix();

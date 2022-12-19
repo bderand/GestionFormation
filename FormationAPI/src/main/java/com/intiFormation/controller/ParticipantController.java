@@ -73,7 +73,7 @@ public class ParticipantController {
 	
 	@PostMapping("/participants/nouveau")
 	public Participant toParticipant(@RequestParam("personne") String personne, @RequestParam(value = "id_formation", required = false) int[] id_formations) {
-		
+		System.out.println(personne);
 		ObjectMapper obj_mapper = new ObjectMapper();
 		Participant participant = null;
 		

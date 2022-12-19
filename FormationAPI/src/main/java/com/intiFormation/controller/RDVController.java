@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intiFormation.model.Historique;
 import com.intiFormation.model.RDV;
 
 
@@ -56,6 +57,12 @@ public class RDVController {
 		return rdv;
 	}
 	
+	@GetMapping("/rdvs/commercial/{id}")
+	public List<RDV> getbyIdcommercial(@PathVariable("id") int id) {
+		List<RDV> rdv = rservice.afficherparcommercial(id);
+		return rdv;
+	}
+	
 	@PostMapping("/rdvs")
 	public void post(@RequestBody RDV r) {
 		rservice.ajouter(r);
@@ -83,7 +90,7 @@ public class RDVController {
 		Calendar cal = Calendar.getInstance();
 		for(int i=0;i<rdvs.size();i++) {
 		    cal.setTime(rdvs.get(i).getRdv()); // sets calendar time/date
-		    cal.add(Calendar.MINUTE, -30); // adds one hour
+		    cal.add(Calendar.MINUTE, -30); // substract 30 min
 		    cal.getTime();
 			String str = sdf.format(cal.getTime());
 			if(str.equals(strDate)) {

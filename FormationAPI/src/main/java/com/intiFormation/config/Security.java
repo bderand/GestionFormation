@@ -49,6 +49,8 @@ public class Security extends WebSecurityConfigurerAdapter{
 	http.csrf().disable()
 	.authorizeRequests().antMatchers(HttpMethod.GET,"/api/utilisateurs/username/**","/documents/**").permitAll()
 	.antMatchers("/api/authenticates").permitAll()
+	.antMatchers(HttpMethod.OPTIONS).permitAll()
+	//.requestMatchers(req -> req.getRequestURI().contains("admin")).hasAuthority("admin")
 	.antMatchers(HttpMethod.OPTIONS).permitAll().requestMatchers(req -> req.getRequestURI().contains("admin")).hasAuthority("admin")
 	.anyRequest().authenticated()
 	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
