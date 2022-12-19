@@ -34,7 +34,13 @@ public class PersonneController {
 	
 	@PostMapping("/personnes")
 	public void post(@RequestBody Personne p) {
-		pservice.ajout(p);
+		Personne p2 = pservice.afficher(p.getId());
+		p2.setAge(p.getAge());
+		p2.setNom(p.getNom());
+		p2.setPrenom(p.getPrenom());
+		p2.setEmail(p.getEmail());
+		p2.setTel(p.getTel());
+		pservice.ajout(p2);
 	}
 	
 	@DeleteMapping("/personnes/{id}")
