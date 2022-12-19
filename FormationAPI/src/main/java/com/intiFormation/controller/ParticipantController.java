@@ -2,6 +2,7 @@ package com.intiFormation.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -69,6 +70,13 @@ public class ParticipantController {
 		Formation formation = formationService.afficherparId(id_formation);
 		if(formation == null)return null;
 		else return formation.getParticipants();
+	}
+	
+	@GetMapping("/participants/{id_participant}/formations")
+	public List<Formation> getFormation_participant(@PathVariable("id_participant") int id_participant)
+	{
+		Participant participant = participantService.getParticipant_id(id_participant);
+		return participant.getFormations();
 	}
 	
 	@PostMapping("/participants/nouveau")
