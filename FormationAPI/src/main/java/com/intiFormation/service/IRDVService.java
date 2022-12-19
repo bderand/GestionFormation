@@ -11,4 +11,5 @@ public interface IRDVService {
 	public void supprimer(int id);
 	public RDV afficherparId(int id);
 	public List<RDV> affichertous();
+	public List<RDV> afficherparcommercial(int id);
 }

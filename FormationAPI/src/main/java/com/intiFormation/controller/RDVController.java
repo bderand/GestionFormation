@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intiFormation.model.Historique;
 import com.intiFormation.model.RDV;
 
 
@@ -53,6 +54,12 @@ public class RDVController {
 	@GetMapping("/rdvs/{id}")
 	public RDV getbyid(@PathVariable("id") int id) {
 		RDV rdv = rservice.afficherparId(id);
+		return rdv;
+	}
+	
+	@GetMapping("/rdvs/commercial/{id}")
+	public List<RDV> getbyIdcommercial(@PathVariable("id") int id) {
+		List<RDV> rdv = rservice.afficherparcommercial(id);
 		return rdv;
 	}
 	
