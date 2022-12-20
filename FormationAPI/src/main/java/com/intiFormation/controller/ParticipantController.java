@@ -144,6 +144,16 @@ public class ParticipantController {
 		return participant;
 	}
 	
+	@PostMapping("/participants/affectation")
+	public void registerformation(@RequestParam("idp") int idp, @RequestParam("idf") int idf) {
+		Participant participant = participantService.getParticipant_id(idp);
+		Formation formation = formationService.afficherparId(idf);
+		List<Formation> liste = participant.getFormations();
+		liste.add(formation);
+		participant.setFormations(liste);
+		participantService.addParticipant(participant);
+	}
+	
 	@PostMapping("/participants")
 	public Participant addParticipant(@RequestParam("id_participant") int id_participant, @RequestParam("id_formations") int[] id_formations) {
 		
