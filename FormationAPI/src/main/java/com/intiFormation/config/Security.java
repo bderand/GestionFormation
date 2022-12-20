@@ -51,7 +51,7 @@ public class Security extends WebSecurityConfigurerAdapter{
 	.antMatchers("/api/authenticates").permitAll()
 	.antMatchers(HttpMethod.OPTIONS).permitAll()
 	//.requestMatchers(req -> req.getRequestURI().contains("admin")).hasAuthority("admin")
-	.antMatchers(HttpMethod.OPTIONS).permitAll().requestMatchers(req -> req.getRequestURI().contains("admin")).hasAuthority("admin")
+	//.antMatchers(HttpMethod.OPTIONS).permitAll().requestMatchers(req -> req.getRequestURI().contains("admin")).hasAuthority("admin")
 	.anyRequest().authenticated()
 	.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	.and().addFilterBefore(jwtrequestfilter, UsernamePasswordAuthenticationFilter.class);

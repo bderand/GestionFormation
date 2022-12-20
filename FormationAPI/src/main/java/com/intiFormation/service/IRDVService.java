@@ -12,4 +12,5 @@ public interface IRDVService {
 	public RDV afficherparId(int id);
 	public List<RDV> affichertous();
 	public List<RDV> afficherparcommercial(int id);
+	public List<RDV> afficherparRDVpersonne(int id);
 }

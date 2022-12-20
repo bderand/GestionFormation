@@ -48,5 +48,11 @@ public class HistoriqueService implements IHistoriqueService{
 		return liste;
 	}
 	
+	@Override
+	public List<Historique> afficherparPersonne(int id){
+		List<Historique> liste = hdao.findByPersonne_id(id);
+		return liste;
+	}
+	
 
 }

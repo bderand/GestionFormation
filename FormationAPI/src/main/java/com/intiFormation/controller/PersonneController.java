@@ -34,7 +34,10 @@ public class PersonneController {
 	
 	@PostMapping("/personnes")
 	public void post(@RequestBody Personne p) {
-		Personne p2 = pservice.afficher(p.getId());
+		Personne p2 = new Personne();
+		if(p.getId() != 0) {
+			p2 = pservice.afficher(p.getId());
+		}
 		p2.setAge(p.getAge());
 		p2.setNom(p.getNom());
 		p2.setPrenom(p.getPrenom());
