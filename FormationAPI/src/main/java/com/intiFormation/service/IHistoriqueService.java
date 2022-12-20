@@ -12,4 +12,5 @@ public interface IHistoriqueService {
 	public Historique afficherparId(int id);
 	public List<Historique> affichertous();
 	public List<Historique> affichertousparIdcommercial(int id);
+	public List<Historique> afficherparPersonne(int id);
 }

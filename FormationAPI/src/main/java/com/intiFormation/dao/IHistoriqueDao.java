@@ -9,4 +9,5 @@ import com.intiFormation.model.Historique;
 public interface IHistoriqueDao extends JpaRepository<Historique, Integer>{
 
 	public List<Historique> findByCommercial_id(int id);
+	public List<Historique> findByPersonne_id(int id);
 }

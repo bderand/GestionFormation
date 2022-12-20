@@ -55,6 +55,12 @@ public class RDVService implements IRDVService{
 		return liste;
 	}
 	
+	@Override
+	public List<RDV> afficherparRDVpersonne(int id){
+		List<RDV> liste = rdao.findByPersonne_id(id);
+		return liste;
+	}
+	
 
 	public void contact(String email_emeteur, String email_recepteur, String titre, String sujet) {
 		 SimpleMailMessage message = new SimpleMailMessage(); 

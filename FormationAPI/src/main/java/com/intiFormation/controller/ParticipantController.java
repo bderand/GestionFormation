@@ -18,14 +18,18 @@ import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intiFormation.config.PasswordUsernameGenerator;
 import com.intiFormation.model.Formation;
+import com.intiFormation.model.Historique;
 import com.intiFormation.model.Paiement;
 import com.intiFormation.model.Participant;
 import com.intiFormation.model.Personne;
+import com.intiFormation.model.RDV;
 import com.intiFormation.model.Role;
 import com.intiFormation.service.IFormationService;
+import com.intiFormation.service.IHistoriqueService;
 import com.intiFormation.service.IPaiementService;
 import com.intiFormation.service.IParticipantService;
 import com.intiFormation.service.IPersonneService;
+import com.intiFormation.service.IRDVService;
 import com.intiFormation.service.IRoleService;
 
 @RestController
@@ -47,6 +51,12 @@ public class ParticipantController {
 	
 	@Autowired
 	IRoleService roleService;
+	
+	@Autowired
+	IRDVService rdvService;
+	
+	@Autowired
+	IHistoriqueService historiqueService; 
 	
 	@Autowired
 	BCryptPasswordEncoder encode;
@@ -72,46 +82,55 @@ public class ParticipantController {
 	}
 	
 	@PostMapping("/participants/nouveau")
-	public Participant toParticipant(@RequestParam("personne") String personne, @RequestParam(value = "id_formation", required = false) int[] id_formations) {
-		System.out.println(personne);
+	public Participant toParticipant(@RequestParam("id") int id,@RequestParam("age") int age, @RequestParam("email") String email, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom, @RequestParam("tel") String tel, @RequestParam(value = "id_formation", required = false) int id_form) {
+		List<Integer> id_formations = new ArrayList<>();
 		ObjectMapper obj_mapper = new ObjectMapper();
 		Participant participant = null;
 		
-		try {
-			List<Formation> formations = new ArrayList<>();
-			Personne p = obj_mapper.readValue(personne, Personne.class);
+		List<Formation> formations = new ArrayList<>();
+		//Personne p = obj_mapper.readValue(personne, Personne.class);
+		Personne p = new Personne(id,prenom,nom,age,email,tel);
+		if(id_formations != null)
+			for(int id_formation:id_formations)
+			{	
+				formations.add(formationService.afficherparId(id_formation));
+			}
+		
+		if(p != null && p.getId() != 0) {
 			
-			if(id_formations != null)
-				for(int id_formation:id_formations)
-				{	
-					formations.add(formationService.afficherparId(id_formation));
-				}
+			PasswordUsernameGenerator generator = new PasswordUsernameGenerator(p.getNom(), p.getPrenom());
+			Role role = roleService.getRole_nom("participant");
 			
-			if(p != null && p.getId() != 0) {
-				
-				PasswordUsernameGenerator generator = new PasswordUsernameGenerator(p.getNom(), p.getPrenom());
-				Role role = roleService.getRole_nom("participant");
-				
-				participant = new Participant(p, role, formations);
-				
-				String username = generator.getUsername();
-				String password = generator.getPassword();
-				participant.setUsername(username);
-				participant.setPassword(password);
-				
-				personneService.contact_participant(participant);
-				
-				participant.setPassword(encode.encode(password));
-				
-				participant = participantService.addParticipant(participant);
-				personneService.supprimer(p.getId());
-				
+			participant = new Participant(p, role, formations);
+			
+			String username = generator.getUsername();
+			String password = generator.getPassword();
+			participant.setUsername(username);
+			participant.setPassword(password);
+			
+			personneService.contact_participant(participant);
+			
+			participant.setPassword(encode.encode(password));
+			
+			participant = participantService.addParticipant(participant);
+			
+			
+			List<RDV> rdv = rdvService.afficherparRDVpersonne(id);
+			List<Historique> historique = historiqueService.afficherparPersonne(id);
+			
+			for (Historique hist : historique) {
+				Personne ph = personneService.afficher(participant.getId());
+				hist.setPersonne(ph);
+				historiqueService.ajouter(hist);
 			}
 			
+			for (RDV r : rdv) {
+				Personne pr = personneService.afficher(participant.getId());
+				r.setPersonne(pr);
+				rdvService.ajouter(r);
+			}
+			personneService.supprimer(p.getId());
 			
-		}
-		catch(JacksonException e) {
-			e.printStackTrace();
 		}
 		
 		return participant;
