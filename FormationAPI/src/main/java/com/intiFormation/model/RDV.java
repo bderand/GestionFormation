@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class RDV {
 
@@ -21,6 +23,7 @@ public class RDV {
 	@ManyToOne
 	@JoinColumn(name = "idPersonne")
 	private Personne personne;
+	@JsonFormat(timezone = "Europe/Paris")
 	private Date rdv;
 	
 	public RDV() {

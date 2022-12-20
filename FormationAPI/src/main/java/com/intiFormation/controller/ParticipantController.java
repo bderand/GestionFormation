@@ -142,6 +142,19 @@ public class ParticipantController {
 		return participant;
 	}
 	
+	@PostMapping("/participants/affectation")
+	public void registerformation(@RequestParam("idp") int idp, @RequestParam("idf") int idf) {
+		Participant participant = participantService.getParticipant_id(idp);
+		Formation formation = formationService.afficherparId(idf);
+		List<Formation> liste = participant.getFormations();
+		liste.add(formation);
+		participant.setFormations(liste);
+		participantService.addParticipant(participant);
+		String titre = "confirmation d'inscription à la formation de " + formation.getNom();
+		String message = "bonjour, \n Vous êtes inscrit à la formation de " + formation.getNom() + ", afin de finaliser la formation, vous devez payez " + formation.getPrix() + "euro. \n pour payer la formation veuillez vous connecter et allez dans l'onglet paiement. \n cordialement \n l'équipe de formation";
+		personneService.contact("javajeeappli@gmail.com", participant.getEmail(), titre, message);
+	}
+	
 	@PostMapping("/participants")
 	public Participant addParticipant(@RequestParam("id_participant") int id_participant, @RequestParam("id_formations") int[] id_formations) {
 		
