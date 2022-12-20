@@ -1,6 +1,5 @@
 package com.intiFormation.service;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IPersonneDao;
 import com.intiFormation.dao.IUtilisateurDao;
+
 import com.intiFormation.model.Personne;
 import com.intiFormation.model.Utilisateur;
 
