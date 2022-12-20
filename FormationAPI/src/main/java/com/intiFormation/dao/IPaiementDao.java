@@ -9,6 +9,6 @@ import com.intiFormation.model.Paiement;
 public interface IPaiementDao extends JpaRepository<Paiement, Integer>{
 	
 	public List<Paiement> findByParticipant_id(int id_participant);
-	public List<Paiement> findByParticipant_idAndFormation_id(int id_participant, int id_formation);
+	public Paiement findByParticipant_idAndFormation_id(int id_participant, int id_formation);
 
 }

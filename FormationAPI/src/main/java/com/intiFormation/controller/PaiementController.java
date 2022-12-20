@@ -50,28 +50,30 @@ public class PaiementController {
 		return paiementService.getPaiements_idParticipants(id_participant);
 	}
 	
+	
 	@GetMapping("/paiements/{id}")
 	public Paiement getPaiement_id(@PathVariable("id") int id_paiement) {
 		
 		return paiementService.getPaiement_id(id_paiement);
 	}
 
-	@GetMapping("/paiements/formation")
+	@PostMapping("/paiements/formation")
 	public float getPaiementReste(@RequestParam("id_participant") int id_participant, @RequestParam("id_formation") int id_formation) {
-		float reste = paiementService.RestantPaiement(id_participant, id_formation);
-		if(reste > 0)
-		{
-			Participant participant = participantService.getParticipant_id(id_participant);
-			Formation formation = formationService.afficherparId(id_formation);
-			paiementService.addPaiement(new Paiement(reste, participant, formation));
-		}
 		
-		return reste;
+		return paiementService.RestantPaiement(id_participant, id_formation);
+	}
+	
+	@PostMapping("/paiements/formation&Participant")
+	public Paiement getPaiement_ParticipantFormation(@RequestParam("id_participant") int id_participant, @RequestParam("id_formation") int id_formation) {
+		
+		return paiementService.getPaiements_idParticipantsFormation(id_participant, id_formation);
 	}
 
 	@PostMapping("/paiements")
-	public Paiement addPaiement(@RequestBody Paiement paiement) {
+	public Paiement addPaiement(@RequestBody Paiement p) {
 		
+		Paiement paiement = paiementService.getPaiement_id(p.getId());
+		paiement.setReste(p.getReste());
 		return paiementService.addPaiement(paiement);
 	}
 	
