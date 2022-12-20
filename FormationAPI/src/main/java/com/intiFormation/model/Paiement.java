@@ -51,7 +51,7 @@ public class Paiement {
 		return reste;
 	}
 
-	public void setPrix(float reste) {
+	public void setReste(float reste) {
 		this.reste = reste;
 	}
 

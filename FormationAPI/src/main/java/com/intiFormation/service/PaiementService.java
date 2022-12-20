@@ -33,7 +33,7 @@ public class PaiementService implements IPaiementService {
 	}
 
 	@Override
-	public List<Paiement> getPaiements_idParticipantsFormation(int id_participant, int id_formation){
+	public Paiement getPaiements_idParticipantsFormation(int id_participant, int id_formation){
 		
 		return paiementDao.findByParticipant_idAndFormation_id(id_participant, id_formation);
 	}
@@ -66,25 +66,16 @@ public class PaiementService implements IPaiementService {
 
 	@Override
 	public float RestantPaiement(int id_participant, int id_formation) {
-		
+
 		float somme_restant = 0.f;
-		List<Paiement> paiements = this.getPaiements_idParticipantsFormation(id_participant, id_formation);
-
-
 		Optional<Formation> op = formationDao.findById(id_formation);
-		if(paiements != null && op.isPresent())
-
+		if(op.isPresent())
+			somme_restant = op.get().getPrix();
+		
+		Paiement paiements = this.getPaiements_idParticipantsFormation(id_participant, id_formation);
+		if(paiements != null)
 		{
-			float somme_paye = 0.f;
-			float somme_total = op.get().getPrix();
-			
-			for(Paiement p:paiements)
-			{
-				somme_paye += p.getReste(); 
-			}
-			
-			somme_restant = somme_total - somme_paye;	
-	
+			somme_restant = paiements.getReste();
 		}
 		
 		return somme_restant;
