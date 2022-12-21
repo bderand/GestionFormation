@@ -84,6 +84,7 @@ public class ParticipantController {
 	public List<Formation> getFormation_participant(@PathVariable("id_participant") int id_participant)
 	{
 		Participant participant = participantService.getParticipant_id(id_participant);
+		
 		return participant.getFormations();
 	}
 	
@@ -202,6 +203,17 @@ public class ParticipantController {
 		reste + " euros\n" + " N'oubliez pas qu'il est possible de régler en plusieurs fois. Bonne journée \n \n Votre assistant";
 		String titre = "Demande de paiement pour la formation " + formation.getNom();
 		personneService.contact("javajeeappli2@gmail.com", participant.getEmail(), titre, message);
+	}
+	
+	@PostMapping("/participants/envoi/paiement")
+	public void envoiPaiement(@RequestParam("argent") float argent, @RequestParam("id_paiement") int id_paiement) {
+		
+		Paiement paiement = paiementService.getPaiement_id(id_paiement);
+		if(paiement != null)
+		{
+			paiement.setReste(paiement.getReste() - argent);
+			paiementService.addPaiement(paiement);
+		}
 	}
 
 }
