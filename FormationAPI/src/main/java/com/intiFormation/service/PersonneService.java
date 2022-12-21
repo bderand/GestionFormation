@@ -81,7 +81,7 @@ public class PersonneService implements IPersonneService{
 	public void contact_participant(Utilisateur user) {
 		
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("javajeeappli@gmail.com");
+		message.setFrom("javajeeappli2@gmail.com");
 		message.setTo(user.getEmail());
 		message.setSubject("Identifiants de connection : Formation");
 		String txt = "Bonjour " + user.getNom() + " " + user.getPrenom()
