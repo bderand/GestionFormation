@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intiFormation.model.Role;
 import com.intiFormation.model.Utilisateur;
+import com.intiFormation.service.IRoleService;
 import com.intiFormation.service.IUtilisateurService;
 
 @RestController
@@ -25,6 +27,9 @@ public class UtilisateurController {
 	
 	@Autowired
 	IUtilisateurService utilisateurService;
+	
+	@Autowired
+	IRoleService rservice;
 	
 	@Autowired
 	BCryptPasswordEncoder encode;
@@ -56,8 +61,10 @@ public class UtilisateurController {
 	}
 	
 	@PostMapping("/utilisateurs")
-	public Utilisateur ajoutUtilisateur(@RequestBody Utilisateur user) {
-		Utilisateur utilisateur = utilisateurService.getUtilisateur_id(user.getId());
+	public void ajoutUtilisateur(@RequestBody Utilisateur user) {
+		user.setPassword(encode.encode(user.getPassword()));
+		utilisateurService.addUtilisateur(user);
+		/*Utilisateur utilisateur = utilisateurService.getUtilisateur_id(user.getId());
 		if(utilisateur != null)
 		{
 			utilisateur.setAge(user.getAge());
@@ -68,7 +75,7 @@ public class UtilisateurController {
 			utilisateur.setUsername(user.getUsername());
 		}
 		
-		return utilisateurService.addUtilisateur(utilisateur);
+		return utilisateurService.addUtilisateur(utilisateur);*/
 	}
 	
 	@PostMapping("/utilisateurs/matched")
@@ -95,5 +102,15 @@ public class UtilisateurController {
 	public void suppUtilisateur(@RequestBody Utilisateur u) {
 		
 		utilisateurService.suppUtilisateur(u);
+	}
+	
+	@GetMapping("/roles")
+	public List<Role> afficherRole(){
+		return rservice.getAll();
+	}
+	
+	@GetMapping("/roles/{id}")
+	public Role afficherR(@PathVariable("id") int id){
+		return rservice.getbyid(id);
 	}
 }
