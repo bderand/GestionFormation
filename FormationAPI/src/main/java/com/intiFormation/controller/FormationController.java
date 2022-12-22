@@ -1,6 +1,7 @@
 package com.intiFormation.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,6 +25,7 @@ import com.intiFormation.service.IFormateurService;
 import com.intiFormation.service.IFormationService;
 import com.intiFormation.service.IPaiementService;
 import com.intiFormation.service.IParticipantService;
+import com.intiFormation.service.ParticipantService;
 
 @RestController
 @RequestMapping("/api")
@@ -123,4 +125,16 @@ public class FormationController {
 		Formation Formation = fservice.afficherparId(id);
 		return Formation;
 	}
+	
+	@GetMapping("/Formations/{id}/participants/{idp}")
+	public void deleteFormation_participant(@PathVariable("id") int id, @PathVariable("idp") int idp){
+		List<Formation> liste = participantService.getParticipant_id(idp).getFormations();
+		List<Formation> list = liste.stream().filter(f -> f.getId() != id).collect(Collectors.toList());
+		Participant participant = participantService.getParticipant_id(idp);
+		participant.setFormations(list);
+		participantService.addParticipant(participant);
+		
+		
+	}
+	
 }

@@ -15,5 +15,7 @@ public interface IPersonneService {
 	public List<Personne> chercher(String nom) ;
 	public void contact(String email_emeteur, String email_recepteur, String titre, String sujet);
 	public void contact_participant(Utilisateur user);
+	public void readPersonnesFromCSV(String fileName);
+	public Personne createPersonne(String[] metadata);
 	
 }

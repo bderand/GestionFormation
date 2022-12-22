@@ -145,16 +145,31 @@ public class ParticipantController {
 	}
 	
 	@PostMapping("/participants/affectation")
-	public void registerformation(@RequestParam("idp") int idp, @RequestParam("idf") int idf) {
+	public boolean registerformation(@RequestParam("idp") int idp, @RequestParam("idf") int idf) {
 		Participant participant = participantService.getParticipant_id(idp);
 		Formation formation = formationService.afficherparId(idf);
 		List<Formation> liste = participant.getFormations();
-		liste.add(formation);
-		participant.setFormations(liste);
-		participantService.addParticipant(participant);
+		System.out.println("le numero du participant : " + participant.getId());
+		boolean b = true;
+		for (Formation f : liste) {
+			for (Participant p : f.getParticipants()) {
+				System.out.println(p.getId());
+				if(p.getId() == participant.getId()) {
+					b = false;
+				}
+			}
+		}
+		System.out.println(b);
+		if(b == true) {
+			liste.add(formation);
+			participant.setFormations(liste);
+			participantService.addParticipant(participant);
+		}
+		return b;
+		/*
 		String titre = "confirmation d'inscription à la formation de " + formation.getNom();
 		String message = "bonjour, \n Vous êtes inscrit à la formation de " + formation.getNom() + ", afin de finaliser la formation, vous devez payez " + formation.getPrix() + "euro. \n pour payer la formation veuillez vous connecter et allez dans l'onglet paiement. \n cordialement \n l'équipe de formation";
-		personneService.contact("javajeeappli@gmail.com", participant.getEmail(), titre, message);
+		personneService.contact("javajeeappli2@gmail.com", participant.getEmail(), titre, message);*/
 	}
 	
 	@PostMapping("/participants")

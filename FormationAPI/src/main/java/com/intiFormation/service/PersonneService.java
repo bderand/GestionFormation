@@ -1,6 +1,12 @@
 package com.intiFormation.service;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +96,35 @@ public class PersonneService implements IPersonneService{
 		message.setText(txt);
 		emailSender.send(message);
 	}
+	
+	@Override
+	public void readPersonnesFromCSV(String fileName) {
+	   
+			Path pathToFile = Paths.get(fileName);
+
+	        try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
+	            String line = br.readLine();
+	            while (line != null) {
+	                String[] attributes = line.split(",");
+	                Personne p = createPersonne(attributes);
+	                pdao.save(p);
+	                line = br.readLine();
+	            }
+	        } catch (IOException ioe) {
+	            ioe.printStackTrace();
+	        }
+	    }
+	
+	@Override
+	public Personne createPersonne(String[] metadata) {
+	    	//int id = Integer.parseInt(metadata[0]);
+	    	String prenom = metadata[0];
+	    	String nom = metadata[1];
+	        int age = Integer.parseInt(metadata[2]);
+	        String email = metadata[3];
+	        String tel = metadata[4];
+	        //return new Personne(id, prenom, nom, age, email, tel);
+	        return new Personne(prenom, nom, age, email, tel);
+	  }
 
 }
