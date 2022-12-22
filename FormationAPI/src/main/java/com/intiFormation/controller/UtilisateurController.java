@@ -61,21 +61,33 @@ public class UtilisateurController {
 	}
 	
 	@PostMapping("/utilisateurs")
-	public void ajoutUtilisateur(@RequestBody Utilisateur user) {
+	public Utilisateur ajoutUtilisateur(@RequestBody Utilisateur user) {
+		
+		Utilisateur utilisateur = null;
+		int id_user = user.getId();
 		user.setPassword(encode.encode(user.getPassword()));
-		utilisateurService.addUtilisateur(user);
-		/*Utilisateur utilisateur = utilisateurService.getUtilisateur_id(user.getId());
-		if(utilisateur != null)
+		if(id_user != 0)
 		{
-			utilisateur.setAge(user.getAge());
-			utilisateur.setNom(user.getNom());
-			utilisateur.setPrenom(user.getPrenom());
-			utilisateur.setEmail(user.getEmail());
-			utilisateur.setTel(user.getTel());
-			utilisateur.setUsername(user.getUsername());
+			utilisateur = utilisateurService.getUtilisateur_id(user.getId());
+			if(utilisateur != null)
+			{
+				utilisateur.setAge(user.getAge());
+				utilisateur.setNom(user.getNom());
+				utilisateur.setPrenom(user.getPrenom());
+				utilisateur.setEmail(user.getEmail());
+				utilisateur.setTel(user.getTel());
+				utilisateur.setUsername(user.getUsername());
+				utilisateur.setPassword(user.getPassword());
+				utilisateurService.addUtilisateur(utilisateur);
+			}
+		}
+		else
+		{
+			user.setPassword(encode.encode(user.getPassword()));
+			utilisateur = utilisateurService.addUtilisateur(user);
 		}
 		
-		return utilisateurService.addUtilisateur(utilisateur);*/
+		return utilisateur;
 	}
 	
 	@PostMapping("/utilisateurs/matched")
