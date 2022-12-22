@@ -2,7 +2,7 @@ package com.intiFormation.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intiFormation.config.PasswordUsernameGenerator;
 import com.intiFormation.model.Formation;
 import com.intiFormation.model.Historique;
@@ -86,13 +84,14 @@ public class ParticipantController {
 	public List<Formation> getFormation_participant(@PathVariable("id_participant") int id_participant)
 	{
 		Participant participant = participantService.getParticipant_id(id_participant);
+		
 		return participant.getFormations();
 	}
 	
 	@PostMapping("/participants/nouveau")
 	public Participant toParticipant(@RequestParam("id") int id,@RequestParam("age") int age, @RequestParam("email") String email, @RequestParam("nom") String nom, @RequestParam("prenom") String prenom, @RequestParam("tel") String tel, @RequestParam(value = "id_formation", required = false) int id_form) {
 		List<Integer> id_formations = new ArrayList<>();
-		ObjectMapper obj_mapper = new ObjectMapper();
+	
 		Participant participant = null;
 		
 		List<Formation> formations = new ArrayList<>();
@@ -207,6 +206,29 @@ public class ParticipantController {
 		}
 		
 		participantService.suppParticipant(id);
+	}
+	
+	@PostMapping("/participants/paiement")
+	public void demanderPaiement(@RequestParam("id_participant") int id_participant, @RequestParam("id_formation") int id_formation, @RequestParam("reste") float reste)
+	{
+		Formation formation = formationService.afficherparId(id_formation);
+		Participant participant = participantService.getParticipant_id(id_participant);
+		String message = "Bonjour " + participant.getNom() + " " + participant.getPrenom() + "\n" +
+		" Vous êtes inscrit à la formation \"" + formation.getNom() + "\" et vous devez payer le montant de " + 
+		reste + " euros\n" + " N'oubliez pas qu'il est possible de régler en plusieurs fois. Bonne journée \n \n Votre assistant";
+		String titre = "Demande de paiement pour la formation " + formation.getNom();
+		personneService.contact("javajeeappli2@gmail.com", participant.getEmail(), titre, message);
+	}
+	
+	@PostMapping("/participants/envoi/paiement")
+	public void envoiPaiement(@RequestParam("argent") float argent, @RequestParam("id_paiement") int id_paiement) {
+		
+		Paiement paiement = paiementService.getPaiement_id(id_paiement);
+		if(paiement != null)
+		{
+			paiement.setReste(paiement.getReste() - argent);
+			paiementService.addPaiement(paiement);
+		}
 	}
 
 }
