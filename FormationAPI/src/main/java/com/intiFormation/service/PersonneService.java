@@ -1,6 +1,7 @@
 package com.intiFormation.service;
 
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.intiFormation.dao.IPersonneDao;
 import com.intiFormation.dao.IUtilisateurDao;
+
 import com.intiFormation.model.Personne;
 import com.intiFormation.model.Utilisateur;
 
@@ -87,7 +89,7 @@ public class PersonneService implements IPersonneService{
 	public void contact_participant(Utilisateur user) {
 		
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("javajeeappli@gmail.com");
+		message.setFrom("javajeeappli2@gmail.com");
 		message.setTo(user.getEmail());
 		message.setSubject("Identifiants de connection : Formation");
 		String txt = "Bonjour " + user.getNom() + " " + user.getPrenom()
