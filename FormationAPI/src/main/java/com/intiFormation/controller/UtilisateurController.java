@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intiFormation.model.Role;
 import com.intiFormation.model.Utilisateur;
+import com.intiFormation.service.IRoleService;
 import com.intiFormation.service.IUtilisateurService;
 
 @RestController
@@ -25,6 +27,9 @@ public class UtilisateurController {
 	
 	@Autowired
 	IUtilisateurService utilisateurService;
+	
+	@Autowired
+	IRoleService rservice;
 	
 	@Autowired
 	BCryptPasswordEncoder encode;
@@ -95,5 +100,10 @@ public class UtilisateurController {
 	public void suppUtilisateur(@RequestBody Utilisateur u) {
 		
 		utilisateurService.suppUtilisateur(u);
+	}
+	
+	@GetMapping("/roles")
+	public List<Role> afficherRole(){
+		return rservice.getAll();
 	}
 }
