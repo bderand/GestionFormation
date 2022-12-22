@@ -1,5 +1,7 @@
 package com.intiFormation.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.intiFormation.model.Personne;
 import com.intiFormation.model.Utilisateur;
@@ -92,6 +95,15 @@ public class PersonneController {
 		Personne personne = pservice.afficher(idp);
 		Utilisateur utilisateur = uservice.getUtilisateur_id(idu);
 		pservice.contact(utilisateur.getEmail(), personne.getEmail(), titre, message);
+	}
+	
+	@PostMapping("personnes/csv")
+	public void csv(@RequestParam("file") MultipartFile file) throws IOException {
+
+		
+		String filename = file.getOriginalFilename();
+		System.out.println(filename);
+		pservice.readPersonnesFromCSV("/Users/IN-LL-053/Desktop/"+filename);
 	}
 
 }

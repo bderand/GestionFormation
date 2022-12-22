@@ -95,7 +95,7 @@ public class PaiementController {
 		Paiement paiement  = paiementService.getPaiement_id(id_paiement);
 		String titre = "relancement du paiement pour la formation: " + paiement.getFormation().getNom();
 		String message = "bonjour, \n nous vous permettons de vous recontacter afin de payer la formation : " + paiement.getFormation().getNom() + " \n si nous avons pas reçu le solde restant, nous serons en mesure de vous supprimer de la liste des participants de la formation. \n Cordialement \n l'équipe de la formation";
-		pservice.contact("javajeeappli@gmail.com", paiement.getParticipant().getEmail(), titre, message);
+		pservice.contact("javajeeappli2@gmail.com", paiement.getParticipant().getEmail(), titre, message);
 	}
 	
 	
