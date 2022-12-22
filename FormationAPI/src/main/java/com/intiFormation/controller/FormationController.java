@@ -25,7 +25,6 @@ import com.intiFormation.service.IFormateurService;
 import com.intiFormation.service.IFormationService;
 import com.intiFormation.service.IPaiementService;
 import com.intiFormation.service.IParticipantService;
-import com.intiFormation.service.ParticipantService;
 
 @RestController
 @RequestMapping("/api")
