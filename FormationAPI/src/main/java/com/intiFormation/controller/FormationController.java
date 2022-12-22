@@ -130,6 +130,12 @@ public class FormationController {
 	public void deleteFormation_participant(@PathVariable("id") int id, @PathVariable("idp") int idp){
 		List<Formation> liste = participantService.getParticipant_id(idp).getFormations();
 		List<Formation> list = liste.stream().filter(f -> f.getId() != id).collect(Collectors.toList());
+		List<Paiement> paye = paiementService.getPaiements_idParticipants(idp);
+		for (Paiement p : paye) {
+			if(p.getFormation().getId() == id) {
+				paiementService.suppPaiement(p.getId());
+			}
+		}
 		Participant participant = participantService.getParticipant_id(idp);
 		participant.setFormations(list);
 		participantService.addParticipant(participant);

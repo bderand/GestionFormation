@@ -160,6 +160,7 @@ public class ParticipantController {
 	public boolean registerformation(@RequestParam("idp") int idp, @RequestParam("idf") int idf) {
 		Participant participant = participantService.getParticipant_id(idp);
 		Formation formation = formationService.afficherparId(idf);
+		Paiement paiement = new Paiement();
 		List<Formation> liste = participant.getFormations();
 		System.out.println("le numero du participant : " + participant.getId());
 		boolean b = true;
@@ -175,6 +176,8 @@ public class ParticipantController {
 		if(b == true) {
 			liste.add(formation);
 			participant.setFormations(liste);
+			paiement.setParticipant(participant);
+			paiement.setFormation(formation);
 			participantService.addParticipant(participant);
 		}
 		return b;
