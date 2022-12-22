@@ -95,7 +95,7 @@ public class RDVController {
 			if(str.equals(strDate)) {
 				String titre = "rappel du rendez-vous";
 				String message = "bonjour \n nous vous rappelons que votre rendez-vous commencera dans 30 minute. \n veuillez-vous préparer \n cordialement \n l'équipe de la formation";
-				pservice.contact("javajeeappli@gmail.com", rdvs.get(i).getCommercial().getEmail(), titre, message);
+				pservice.contact("javajeeappli2@gmail.com", rdvs.get(i).getCommercial().getEmail(), titre, message);
 			}
 		}
 		

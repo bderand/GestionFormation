@@ -36,13 +36,14 @@ public class CSVReaderInJava {
     }
 
     private static Personne createPersonne(String[] metadata) {
-    	int id = Integer.parseInt(metadata[0]);
-    	String prenom = metadata[1];
-    	String nom = metadata[2];
-        int age = Integer.parseInt(metadata[3]);
-        String email = metadata[4];
-        String tel = metadata[5];
-        return new Personne(id, prenom, nom, age, email, tel);
+    	//int id = Integer.parseInt(metadata[0]);
+    	String prenom = metadata[0];
+    	String nom = metadata[1];
+        int age = Integer.parseInt(metadata[2]);
+        String email = metadata[3];
+        String tel = metadata[4];
+        //return new Personne(id, prenom, nom, age, email, tel);
+        return new Personne(prenom, nom, age, email, tel);
     }
 
 }
