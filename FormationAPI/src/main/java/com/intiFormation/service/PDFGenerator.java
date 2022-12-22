@@ -37,10 +37,10 @@ public class PDFGenerator {
 		String date_fin = format.format(formation.getFin());
 		
 		String presentation =
-				"Bonjour " + participant.getNom() + " " + participant.getPrenom()+",\n" +
+				"Bonjour " + participant.getNom() + " " + participant.getPrenom()+",\n \n" +
 				"Notre équipe vous accueille à la formation \"" + formation.getNom() + "\" qui va commencer le " + date_debut + " à 9h00 et se terminera le " + date_fin + " pendant une durée de 7h30 par jour."+
 				"\n" + formation.getFormateur().getNom() + " " + formation.getFormateur().getPrenom() + " assurera votre formation. \n Veuillez trouver votre identifiant de connection : \n" + 
-				participant.getUsername() + "\n Pour toutes questions vous pouvez contacter par mail votre formateur: " + formation.getFormateur().getEmail() + 
+				participant.getUsername() + "\n \n Pour toutes questions vous pouvez contacter par mail votre formateur: " + formation.getFormateur().getEmail() + 
 				" Enfin, nous vous demandons de signer le document ci-dessous précédé de la mention lu et approuvé";
 		
 		Chunk chunk = new Chunk(presentation, font);
