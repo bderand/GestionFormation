@@ -61,8 +61,10 @@ public class UtilisateurController {
 	}
 	
 	@PostMapping("/utilisateurs")
-	public Utilisateur ajoutUtilisateur(@RequestBody Utilisateur user) {
-		Utilisateur utilisateur = utilisateurService.getUtilisateur_id(user.getId());
+	public void ajoutUtilisateur(@RequestBody Utilisateur user) {
+		user.setPassword(encode.encode(user.getPassword()));
+		utilisateurService.addUtilisateur(user);
+		/*Utilisateur utilisateur = utilisateurService.getUtilisateur_id(user.getId());
 		if(utilisateur != null)
 		{
 			utilisateur.setAge(user.getAge());
@@ -73,7 +75,7 @@ public class UtilisateurController {
 			utilisateur.setUsername(user.getUsername());
 		}
 		
-		return utilisateurService.addUtilisateur(utilisateur);
+		return utilisateurService.addUtilisateur(utilisateur);*/
 	}
 	
 	@PostMapping("/utilisateurs/matched")
@@ -105,5 +107,10 @@ public class UtilisateurController {
 	@GetMapping("/roles")
 	public List<Role> afficherRole(){
 		return rservice.getAll();
+	}
+	
+	@GetMapping("/roles/{id}")
+	public Role afficherR(@PathVariable("id") int id){
+		return rservice.getbyid(id);
 	}
 }

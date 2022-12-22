@@ -10,4 +10,5 @@ public interface IRoleService {
 	public Role addRole(Role role);
 	public void suppRole(int id_role);
 	public List<Role> getAll();
+	Role getbyid(int id);
 }

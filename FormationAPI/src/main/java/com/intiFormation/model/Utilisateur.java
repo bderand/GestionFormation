@@ -12,7 +12,7 @@ public class Utilisateur extends Personne {
 	private String username;
 	private String password;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "idRole")
 	private Role role;
 

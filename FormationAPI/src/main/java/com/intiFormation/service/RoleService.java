@@ -37,6 +37,11 @@ public class RoleService implements IRoleService {
 		List<Role> r = roleDao.findAll();
 		return r;
 	}
+	
+	@Override
+	public Role getbyid(int id) {
+		return roleDao.findById(id).get();
+	}
 
 	
 }
