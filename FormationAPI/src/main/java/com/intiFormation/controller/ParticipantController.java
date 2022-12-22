@@ -1,10 +1,17 @@
 package com.intiFormation.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +37,9 @@ import com.intiFormation.service.IParticipantService;
 import com.intiFormation.service.IPersonneService;
 import com.intiFormation.service.IRDVService;
 import com.intiFormation.service.IRoleService;
+import com.intiFormation.service.PDFGenerator;
+
+import com.itextpdf.text.DocumentException;
 
 @RestController
 @RequestMapping("/api")
@@ -59,6 +69,9 @@ public class ParticipantController {
 	
 	@Autowired
 	BCryptPasswordEncoder encode;
+	
+	@Autowired
+	PDFGenerator pdfGenerator;
 	
 	@GetMapping("/participants")
 	public List<Participant> getParticipants_all(){
@@ -214,6 +227,29 @@ public class ParticipantController {
 			paiement.setReste(paiement.getReste() - argent);
 			paiementService.addPaiement(paiement);
 		}
+	}
+	
+	@PostMapping(value="/participants/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> getPDF(@RequestParam("id_participant") int id_participant, @RequestParam("id_formation") int id_formation){
+		
+		Participant participant = participantService.getParticipant_id(id_participant);
+		Formation formation = formationService.afficherparId(id_formation);
+		HttpHeaders header = new HttpHeaders();
+		header.add("Content-Disposition","filename =" + participant.getNom() + "_" + participant.getPrenom());
+		ByteArrayInputStream doc = null;
+		try {
+			
+			doc = pdfGenerator.export(participant, formation);
+			
+		}
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (DocumentException e) {
+			e.printStackTrace();
+		}
+	
+		return ResponseEntity.ok().body(new InputStreamResource(doc));
 	}
 
 }
