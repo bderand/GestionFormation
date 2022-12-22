@@ -65,7 +65,7 @@ public class UtilisateurController {
 		
 		Utilisateur utilisateur = null;
 		int id_user = user.getId();
-		user.setPassword(encode.encode(user.getPassword()));
+		
 		if(id_user != 0)
 		{
 			utilisateur = utilisateurService.getUtilisateur_id(user.getId());
@@ -78,6 +78,10 @@ public class UtilisateurController {
 				utilisateur.setTel(user.getTel());
 				utilisateur.setUsername(user.getUsername());
 				utilisateur.setPassword(user.getPassword());
+				if(!(user.getPassword().startsWith("$2") && user.getPassword().length() == 60))
+				{
+					utilisateur.setPassword(encode.encode(user.getPassword()));
+				}
 				utilisateurService.addUtilisateur(utilisateur);
 			}
 		}
